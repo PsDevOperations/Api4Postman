@@ -1983,14 +1983,14 @@
   ],
   "variable": [
     {
-      "id": "3cd0ed43-9bc7-4e93-b95f-8aa5728229fd",
+      "id": "d62f1574-0426-475d-876b-43fd7388a59f",
       "key": "apiKey",
       "value": "apiservertoken1225",
       "type": "text",
       "description": ""
     },
     {
-      "id": "ac1e8bc9-79d0-4f86-82be-014f8715f3ac",
+      "id": "3ecf93a8-583f-4233-ae62-cbbec138260f",
       "key": "userId",
       "value": "APIUser1225",
       "type": "text",
