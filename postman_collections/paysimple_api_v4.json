@@ -1,0 +1,2007 @@
+{
+  "info": {
+    "name": "PaySimple API v4",
+    "_postman_id": "6ba23630-5c12-e505-48ca-26c16b9f7a67",
+    "description": "Includes all public endpoints for the PaySimple API version 4.\n",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "_postman_id": "47583260-29af-d820-b872-19fc483e512d",
+      "name": "1. Make payment with new customer",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "ac0b04d8-2e3a-732f-e37b-36483c866741",
+          "name": "Create Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "3f794d30-2048-4d3c-98f5-b51ddf9d5ba3",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Response.Id;",
+                  "",
+                  "tests[\"Customer Id is set\"] = customerId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"customerId\", customerId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"FirstName\": \"John\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"johndoe@paysimple.com\",\n    \"Phone\": \"5551234567\",\n    \"Company\": \"Great Plumbing\",\n    \"Notes\": null,\n    \"CustomerAccount\": \"\",\n    \"ShippingSameAsBilling\": false,\n    \"BillingAddress\": {\n        \"StreetAddress1\": \"123 Any Street\",\n        \"City\": \"White Rock\",\n        \"StateCode\": \"BC\",\n        \"ZipCode\": \"A3A2A1\",\n        \"Country\": \"Canada\"\n    },\n    \"ShippingAddress\": {\n        \"StreetAddress1\": \"1515 Wynkoop St.\",\n        \"StreetAddress2\": \"Suite 200\",\n        \"City\": \"Denver\",\n        \"StateCode\": \"CO\",\n        \"ZipCode\": \"80202\",\n        \"Country\": \"US\"\n    }\n}"
+            },
+            "url": "{{url}}/customer",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "dd114dfc-7435-f201-2562-c970465cc218",
+          "name": "Create Credit Card Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "f88fc88a-a451-40d4-b3e3-3799ab8f131b",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var accountId = d.Response.Id;",
+                  "",
+                  "tests[\"Account Id is set\"] = accountId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"accountId\", accountId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"CreditCardNumber\": \"4111111111111111\",\r\n    \"ExpirationDate\": \"12/2015\",\r\n    \"Issuer\": \"12\",\r\n    \"BillingZipCode\": \"80202\",\r\n    \"CustomerId\": {{customerId}}\r\n}"
+            },
+            "url": "{{url}}/account/creditcard",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "1b7bde36-da9d-883c-6374-35a6c71e9e8e",
+          "name": "Charge the Customer's Card -> AUTHORIZED",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "7ee48cb3-a51b-4be2-9821-291af3c809b0",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var paymentId = d.Response.Id;",
+                  "",
+                  "tests[\"Payment Id is set\"] = paymentId;",
+                  "tests[\"Status is Authorized\"] = d.Response.Status == \"Authorized\";",
+                  "",
+                  "postman.setEnvironmentVariable(\"paymentId\", paymentId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Amount\" : 5.50,\r\n    \"AccountId\" : {{accountId}}\r\n}"
+            },
+            "url": "{{url}}/payment",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "0ec391f8-c7ee-3617-3329-3fdbf40a79fe",
+          "name": "Retrieve Payment",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "179d8eb6-7725-4954-b0a7-c580a2faf4a1",
+                "type": "text/javascript",
+                "exec": [
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/payment/{{paymentId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "29b4ba70-8219-c8f4-cb62-ab7d1c330cf4",
+          "name": "Void Payment",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "c2f36d9b-ed18-4a95-bd10-b7b3fb200739",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "tests[\"Status is Voided\"] = d.Response.Status === \"Voided\";",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/payment/{{paymentId}}/void",
+            "description": "Voids a payment, preventing the payment from being batched out before the cutoff time."
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "b5c1dc37-d2d1-6631-2a61-3f5dee7a45cf",
+          "name": "Charge the Customer's Card -> DECLINE",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "97f81169-445c-49e2-b67b-c9e2c19f7a3b",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var paymentId = d.Response.Id;",
+                  "",
+                  "tests[\"Payment Id is set\"] = paymentId;",
+                  "tests[\"Status is Failed\"] = d.Response.Status === \"Failed\";",
+                  "tests[\"Failure Code is 4005\"] = d.Response.FailureData.Code === \"4005\";",
+                  "tests[\"Failure Description is Do Not Honor\"] = d.Response.FailureData.Description === \"Do Not Honor\";",
+                  "tests[\"Is Decline Set\"] = d.Response.FailureData.IsDecline === true;",
+                  "",
+                  "postman.setEnvironmentVariable(\"paymentId\", paymentId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Amount\" : 9999.01,\r\n    \"AccountId\" : {{accountId}}\r\n}"
+            },
+            "url": "{{url}}/payment",
+            "description": "In the PaySimple SANDBOX environment, amounts in the 9999.01 - 9999.29 range generate failure responses.  This is an example of a DECLINE response."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "9386564c-efee-42b2-8492-34aedae37ce9",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "f8900b4a-5b84-41ac-b607-cb49896e2da3",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "_postman_id": "88daab3f-050d-2d2d-c923-e604291ec2e3",
+      "name": "2. Make payment and refund",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "f45d6354-3360-1abd-f2fd-835016c5e6a9",
+          "name": "Charge the Customer's Card -> AUTHORIZED",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "7ee48cb3-a51b-4be2-9821-291af3c809b0",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var paymentId = d.Response.Id;",
+                  "",
+                  "tests[\"Payment Id is set\"] = paymentId;",
+                  "tests[\"Status is Authorized\"] = d.Response.Status == \"Authorized\";",
+                  "",
+                  "postman.setEnvironmentVariable(\"paymentId\", paymentId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"Amount\" : 5.50,\r\n    \"AccountId\" : {{accountId}}\r\n}"
+            },
+            "url": "{{url}}/payment",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "ac0e6d36-366a-162c-ac1a-755424cc04e0",
+          "name": "Mark Payment Settled  - FOR TEST ONLY!",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0e61cc9c-7753-4280-9fa4-3592bb022191",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "tests[\"MarkStatus is Updated\"] = d.Response.MarkStatus === \"Updated\";",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"PaymentId\" : {{paymentId}}\n}"
+            },
+            "url": "{{url}}/MarkPaymentStatus",
+            "description": "Voids a payment, preventing the payment from being batched out before the cutoff time."
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "88e82a7f-6133-914e-955f-fe8a980b8f16",
+          "name": "Refund settled payment",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "983792ed-ef9c-4871-a5a3-5faa49c3f882",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "tests[\"Status is ReversedPosted\"] = d.Response.Status === \"ReversePosted\";",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/payment/{{paymentId}}/reverse",
+            "description": ""
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "9386564c-efee-42b2-8492-34aedae37ce9",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "f8900b4a-5b84-41ac-b607-cb49896e2da3",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "_postman_id": "24dba7e0-7811-85f4-6f07-79e4a5d27192",
+      "name": "Schedules",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "2225136c-fffe-6249-04fb-9e4189f54ca8",
+          "name": "Suspend",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "234a0656-17a4-4f12-bd8e-1fab4fe3595d",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "1f7b1c02-b439-4983-91c4-0baad1e233fb",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/suspend",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "b7b6fc27-4b80-14de-096e-e9ef26b37930",
+          "name": "Pause",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "71f2ee54-ef68-44ec-a028-fb82e54d021f",
+                "type": "text/javascript",
+                "exec": [
+                  "var result = new Date();",
+                  "result.setDate(result.getDate() + 30);",
+                  "",
+                  "var oneMonth = result.toISOString().split(\"T\")[0];",
+                  "console.log(oneMonth);",
+                  "postman.setEnvironmentVariable('oneMonth', oneMonth);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "1f7b1c02-b439-4983-91c4-0baad1e233fb",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{url}}/recurringpayment/{{recurringPaymentId}}/pause?enddate={{oneMonth}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "recurringpayment",
+                "{{recurringPaymentId}}",
+                "pause"
+              ],
+              "query": [
+                {
+                  "key": "enddate",
+                  "value": "{{oneMonth}}",
+                  "equals": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "e74a1ce9-88b9-6d3a-3dd1-91d719e42f36",
+          "name": "Resume",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "234a0656-17a4-4f12-bd8e-1fab4fe3595d",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "1f7b1c02-b439-4983-91c4-0baad1e233fb",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/resume",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "4eebcdc0-61b9-6e3d-5757-e983ff0ac0a7",
+          "name": "Update Recurring Payment",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f94fea6f-3d1c-47b2-8664-a0bbe4a80420",
+                "type": "text/javascript",
+                "exec": [
+                  "var result = new Date();",
+                  "result.setDate(result.getDate() + 7);",
+                  "",
+                  "var oneWeek = result.toISOString();",
+                  "console.log(oneWeek);",
+                  "postman.setEnvironmentVariable('oneWeek', oneWeek);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "9b81b735-8558-4e48-a718-5b2338820670",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"PaymentAmount set correctly to $15\"] = 15 === d.Response.PaymentAmount;",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/recurringpayment",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "c33ce014-76f2-1640-2085-84a79ede9e19",
+          "name": "List Payments",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f94fea6f-3d1c-47b2-8664-a0bbe4a80420",
+                "type": "text/javascript",
+                "exec": [
+                  "var result = new Date();",
+                  "result.setDate(result.getDate() + 7);",
+                  "",
+                  "var oneWeek = result.toISOString();",
+                  "console.log(oneWeek);",
+                  "postman.setEnvironmentVariable('oneWeek', oneWeek);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0b08782f-3966-49de-9b26-fe10b4ae492c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/payments",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f3ae8caf-6c26-eee7-a038-ee7585a76c4f",
+          "name": "List Schedules",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "c04f4094-24ce-4531-8c8e-476c5b7efd5f",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0b08782f-3966-49de-9b26-fe10b4ae492c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/paymentschedule",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f1ed550c-0a7d-fcd6-e11f-8e053cdc9f07",
+          "name": "List Recurring Payments",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "c04f4094-24ce-4531-8c8e-476c5b7efd5f",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0b08782f-3966-49de-9b26-fe10b4ae492c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/recurringpayment",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "605f72b2-745a-67b7-fbcc-03268482cffa",
+          "name": "List Payment Plans",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "c04f4094-24ce-4531-8c8e-476c5b7efd5f",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "0b08782f-3966-49de-9b26-fe10b4ae492c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  "",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/paymentplan",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "86e982f2-1320-c5de-528b-303d4dc22908",
+          "name": "Recurring Payment",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f94fea6f-3d1c-47b2-8664-a0bbe4a80420",
+                "type": "text/javascript",
+                "exec": [
+                  "var result = new Date();",
+                  "result.setDate(result.getDate() + 7);",
+                  "",
+                  "var oneWeek = result.toISOString();",
+                  "console.log(oneWeek);",
+                  "postman.setEnvironmentVariable('oneWeek', oneWeek);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "cee51757-f9b7-49e9-af72-2ba249f7040f",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}",
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "770ac1ae-1faa-60fd-d4a8-5f6f2e2edb3e",
+      "name": "Customer",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "3ba09ed2-a45c-5353-40e2-950f1404a175",
+          "name": "Create Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "3f794d30-2048-4d3c-98f5-b51ddf9d5ba3",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Response.Id;",
+                  "",
+                  "tests[\"Customer Id is set\"] = customerId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"customerId\", customerId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"FirstName\": \"John\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"johndoe@paysimple.com\",\n    \"Phone\": \"5551234567\",\n    \"Company\": \"Great Plumbing\",\n    \"Notes\": null,\n    \"CustomerAccount\": \"\",\n    \"ShippingSameAsBilling\": false,\n    \"BillingAddress\": {\n        \"StreetAddress1\": \"123 Any Street\",\n        \"City\": \"White Rock\",\n        \"StateCode\": \"BC\",\n        \"ZipCode\": \"A3A2A1\",\n        \"Country\": \"Canada\"\n    },\n    \"ShippingAddress\": {\n        \"StreetAddress1\": \"1515 Wynkoop St.\",\n        \"StreetAddress2\": \"Suite 200\",\n        \"City\": \"Denver\",\n        \"StateCode\": \"CO\",\n        \"ZipCode\": \"80202\",\n        \"Country\": \"US\"\n    }\n}"
+            },
+            "url": "{{url}}/customer",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "c816fc84-eed8-1fbc-63e7-9b94b5018ab5",
+          "name": "Update Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "3f794d30-2048-4d3c-98f5-b51ddf9d5ba3",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Response.Id;",
+                  "",
+                  "tests[\"Customer Id is set\"] = customerId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"customerId\", customerId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"Id\" : {{customerId}},\n\t\"FirstName\": \"Jane\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"johndoe@paysimple.com\",\n    \"Phone\": \"5551234567\",\n    \"Company\": \"Great Plumbing\",\n    \"Notes\": null,\n    \"CustomerAccount\": \"\",\n    \"ShippingSameAsBilling\": false,\n    \"BillingAddress\": {\n        \"StreetAddress1\": \"123 Any Street\",\n        \"City\": \"White Rock\",\n        \"StateCode\": \"BC\",\n        \"ZipCode\": \"A3A2A1\",\n        \"Country\": \"Canada\"\n    },\n    \"ShippingAddress\": {\n        \"StreetAddress1\": \"1515 Wynkoop St.\",\n        \"StreetAddress2\": \"Suite 200\",\n        \"City\": \"Denver\",\n        \"StateCode\": \"CO\",\n        \"ZipCode\": \"80202\",\n        \"Country\": \"US\"\n    }\n}"
+            },
+            "url": "{{url}}/customer",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "e16debce-f4a6-14d4-4d89-a4e6bccd395b",
+          "name": "List Customers",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "26687209-fa6e-4c11-ba62-60158d410a2a",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": "{{url}}/customer",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "9e74c57f-d6dc-d2af-7432-7bcced1e2c1c",
+          "name": "Retrieve Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "2002a163-4abc-490b-9e96-83f89f6adc39",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": "{{url}}/customer/{{customerId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "4eaa3081-e200-497b-60d5-ca55c858e691",
+          "name": "List Customers",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "2c315882-a5d8-4b73-9332-900ed7ba3d33",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "tests[\"OK returned\"] = d.Meta.HttpStatus === \"OK\";",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{url}}/customer?page=1&pagesize=50",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "customer"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "equals": true
+                },
+                {
+                  "key": "pagesize",
+                  "value": "50",
+                  "equals": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "71d9c70f-92ab-8bb6-6512-175f971c483f",
+          "name": "Create Credit Card Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "61d5c8cb-3678-46e9-aa54-03e6af160f57",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var accountId = d.Response.Id;",
+                  "",
+                  "tests[\"Credit Card Account Id is set\"] = accountId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"creditCardAccountId\", accountId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"CreditCardNumber\": \"4111111111111111\",\r\n    \"ExpirationDate\": \"12/2015\",\r\n    \"Issuer\": \"12\",\r\n    \"BillingZipCode\": \"80202\",\r\n    \"CustomerId\": {{customerId}},\r\n    \"IsDefault\" : false\r\n}"
+            },
+            "url": "{{url}}/account/creditcard",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "f02e6f78-9b7e-0c5d-d623-4235e2edb9ea",
+          "name": "Set Default Credit Card Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "a081fe96-e4a9-45be-a447-9a89bf56a16c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/customer/{{customerId}}/{{creditCardAccountId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "661b0e65-2d9a-8658-de08-20868e84f735",
+          "name": "Update Credit Card Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "61d5c8cb-3678-46e9-aa54-03e6af160f57",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var accountId = d.Response.Id;",
+                  "",
+                  "tests[\"Credit Card Account Id is set\"] = accountId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"creditCardAccountId\", accountId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{creditCardAccountId}},\r\n    \"ExpirationDate\": \"12/2015\",\r\n    \"BillingZipCode\": \"80203\",\r\n    \"CreditCardNumber\": \"4111111111111111\",\r\n    \"Issuer\": \"12\",\r\n    \"CustomerId\" : {{customerId}}\r\n}"
+            },
+            "url": "{{url}}/account/creditcard",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "7e0f3730-11c3-c604-300a-17a7afe214c7",
+          "name": "List Credit Card Accounts",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": "{{url}}/customer/{{customerId}}/creditcardaccounts",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "7507354b-78d9-1e49-4fec-a2175c839400",
+          "name": "Delete Credit Card Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "a081fe96-e4a9-45be-a447-9a89bf56a16c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/account/creditcard/{{creditCardAccountId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "a7033eda-7b1f-8145-3751-ffdbd7825ff5",
+          "name": "Create ACH Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "8e4c3802-20d5-4475-ac9d-f2de48f08f8d",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var accountId = d.Response.Id;",
+                  "",
+                  "tests[\"ACH Account Id is set\"] = accountId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"achAccountId\", accountId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"IsCheckingAccount\": \"true\",\r\n    \"RoutingNumber\": \"072000326\",\r\n    \"AccountNumber\": \"751666666\",\r\n    \"BankName\": \"Test Bank\",\r\n    \"CustomerId\": {{customerId}},\r\n    \"IsDefault\": false\r\n}"
+            },
+            "url": "{{url}}/account/ach",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "097489d7-1e80-529c-a6c8-48f8035f347c",
+          "name": "Set Default ACH Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "a081fe96-e4a9-45be-a447-9a89bf56a16c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/customer/{{customerId}}/{{achAccountId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "0fe1f2cf-abf2-a396-6a2e-e207443804eb",
+          "name": "Update ACH Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "8e4c3802-20d5-4475-ac9d-f2de48f08f8d",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var accountId = d.Response.Id;",
+                  "",
+                  "tests[\"ACH Account Id is set\"] = accountId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"achAccountId\", accountId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"Id\" : {{achAccountId}},\r\n    \"IsCheckingAccount\": \"false\",\r\n    \"RoutingNumber\": \"072000326\",\r\n    \"AccountNumber\": \"751666666\",\r\n    \"BankName\": \"Test Bank\",\r\n    \"CustomerId\": {{customerId}},\r\n    \"IsDefault\": \"true\"\r\n}"
+            },
+            "url": "{{url}}/account/ach",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "05b435f4-a837-0517-dd3e-416ea8846291",
+          "name": "List ACH Accounts",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": "{{url}}/customer/{{customerId}}/achaccounts",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "3af3bb9f-25d7-90a5-f313-a8b9f684f0b6",
+          "name": "List All Accounts",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": "{{url}}/customer/{{customerId}}/accounts",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "57b7c58b-0cbb-7a5f-5acb-85596b5ec5b2",
+          "name": "Delete ACH Account",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "a081fe96-e4a9-45be-a447-9a89bf56a16c",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/account/ach/{{achAccountId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "8d403955-5dff-f747-6a5f-92cf3a9dc018",
+          "name": "Delete Customer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "b65b6270-79e5-45a5-884a-f19ca9e9c3b1",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var customerId = d.Meta.HttpStatusCode;",
+                  "",
+                  "tests[\"204 No Content Returned\"] = d.Meta.HttpStatusCode == 204;"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}/customer/{{customerId}}",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "e3fd42a5-1b31-436a-4ebd-f6bb4c282aca",
+          "name": "List Payments",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "27c03e35-333b-43af-a53d-f0e3b4c4f536",
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "",
+                "value": "",
+                "disabled": true
+              }
+            ],
+            "body": {},
+            "url": "{{url}}/customer/{{customerId}}/payments",
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "d8c4104b-62e2-397c-7cb5-7c724168341f",
+          "name": "Create Recurring Payment",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f94fea6f-3d1c-47b2-8664-a0bbe4a80420",
+                "type": "text/javascript",
+                "exec": [
+                  "var result = new Date();",
+                  "result.setDate(result.getDate() + 7);",
+                  "",
+                  "var oneWeek = result.toISOString();",
+                  "console.log(oneWeek);",
+                  "postman.setEnvironmentVariable('oneWeek', oneWeek);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "8f4afa4f-9b94-4638-ba74-07b7c51dd70a",
+                "type": "text/javascript",
+                "exec": [
+                  "var d = JSON.parse(responseBody);",
+                  "",
+                  "var recurringPaymentId = d.Response.Id;",
+                  "",
+                  "tests[\"Recurring Payment Id is set\"] = recurringPaymentId;",
+                  "",
+                  "postman.setEnvironmentVariable(\"recurringPaymentId\", recurringPaymentId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{hmac}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"PaymentAmount\": 12,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
+            },
+            "url": "{{url}}/recurringpayment",
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {}
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "3f57218d-6163-442e-9706-25392dfd360e",
+        "type": "text/javascript",
+        "exec": [
+          "var apiKey = pm.variables.get('apiKey');",
+          "var userId = pm.variables.get('userId');",
+          "",
+          "console.log('apikey' + apiKey);",
+          "",
+          "var date = new Date();",
+          "var isoDate = date.toISOString();",
+          "",
+          "var encodedKey = CryptoJS.enc.Utf8.parse(apiKey);",
+          "var encodedTimestamp = CryptoJS.enc.Utf8.parse(isoDate);",
+          "",
+          "var signature = CryptoJS.HmacSHA256(encodedTimestamp, encodedKey);",
+          "var encodedSignature = CryptoJS.enc.Base64.stringify(signature);",
+          "",
+          "var headerValue =  'PSSERVER AccessId = ' + userId + '; Timestamp = ' +  isoDate + '; Signature = ' + encodedSignature;",
+          "console.log(headerValue);",
+          "postman.setGlobalVariable('hmac', headerValue);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "f2796dad-9b62-47c6-a923-80f599f37b02",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "6e99ba67-ab09-4610-b0e2-126b38ac0d7d",
+      "key": "url",
+      "value": "http://api.dev-paysimple.com/v4",
+      "type": "text",
+      "description": ""
+    },
+    {
+      "id": "69ecc0bc-596d-4587-8d30-41214e5f7c09",
+      "key": "apiKey",
+      "value": "apiservertoken1225",
+      "type": "text",
+      "description": ""
+    },
+    {
+      "id": "e3ce410e-3ffc-418d-b836-3a6411b8d138",
+      "key": "userId",
+      "value": "APIUser1225",
+      "type": "text",
+      "description": ""
+    }
+  ]
+}
