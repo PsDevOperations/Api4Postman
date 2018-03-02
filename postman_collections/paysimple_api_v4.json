@@ -1983,21 +1983,22 @@
   ],
   "variable": [
     {
-      "id": "88dbecd3-e4cb-420c-af2e-564fe9e6ad14",
+      "id": "f826dc63-d301-4399-b69e-d472ef52d7e7",
       "key": "url",
       "value": "http://api.dev-paysimple.com/v4",
       "type": "text",
+      "disabled": true,
       "description": ""
     },
     {
-      "id": "e039fe28-d695-4152-b72a-0a57d38114ce",
+      "id": "e84314e8-a69c-4bf8-929a-f5668684ae10",
       "key": "apiKey",
       "value": "apiservertoken1225",
       "type": "text",
       "description": ""
     },
     {
-      "id": "33c28451-588b-47d5-a8e9-06dad4c3de68",
+      "id": "1b2d52d2-47ff-4262-a7b9-49e6e0f6e74c",
       "key": "userId",
       "value": "APIUser1225",
       "type": "text",
