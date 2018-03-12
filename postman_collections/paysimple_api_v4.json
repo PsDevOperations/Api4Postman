@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "PaySimple API v4",
     "_postman_id": "6ba23630-5c12-e505-48ca-26c16b9f7a67",
+    "name": "PaySimple API v4",
     "description": "Includes all public endpoints for the PaySimple API version 4.\n",
     "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
   },
@@ -58,8 +58,7 @@
               "mode": "raw",
               "raw": "{\n\t\"FirstName\": \"John\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"johndoe@paysimple.com\",\n    \"Phone\": \"5551234567\",\n    \"Company\": \"Great Plumbing\",\n    \"Notes\": null,\n    \"CustomerAccount\": \"\",\n    \"ShippingSameAsBilling\": false,\n    \"BillingAddress\": {\n        \"StreetAddress1\": \"123 Any Street\",\n        \"City\": \"White Rock\",\n        \"StateCode\": \"BC\",\n        \"ZipCode\": \"A3A2A1\",\n        \"Country\": \"Canada\"\n    },\n    \"ShippingAddress\": {\n        \"StreetAddress1\": \"1515 Wynkoop St.\",\n        \"StreetAddress2\": \"Suite 200\",\n        \"City\": \"Denver\",\n        \"StateCode\": \"CO\",\n        \"ZipCode\": \"80202\",\n        \"Country\": \"US\"\n    }\n}"
             },
-            "url": "{{url}}/customer",
-            "description": ""
+            "url": "{{url}}/customer"
           },
           "response": []
         },
@@ -110,8 +109,7 @@
               "mode": "raw",
               "raw": "{\r\n    \"CreditCardNumber\": \"4111111111111111\",\r\n    \"ExpirationDate\": \"12/2015\",\r\n    \"Issuer\": \"12\",\r\n    \"BillingZipCode\": \"80202\",\r\n    \"CustomerId\": {{customerId}}\r\n}"
             },
-            "url": "{{url}}/account/creditcard",
-            "description": ""
+            "url": "{{url}}/account/creditcard"
           },
           "response": []
         },
@@ -163,8 +161,7 @@
               "mode": "raw",
               "raw": "{\r\n    \"Amount\" : 5.50,\r\n    \"AccountId\" : {{accountId}}\r\n}"
             },
-            "url": "{{url}}/payment",
-            "description": ""
+            "url": "{{url}}/payment"
           },
           "response": []
         },
@@ -210,8 +207,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/payment/{{paymentId}}",
-            "description": ""
+            "url": "{{url}}/payment/{{paymentId}}"
           },
           "response": []
         },
@@ -396,8 +392,7 @@
               "mode": "raw",
               "raw": "{\r\n    \"Amount\" : 5.50,\r\n    \"AccountId\" : {{accountId}}\r\n}"
             },
-            "url": "{{url}}/payment",
-            "description": ""
+            "url": "{{url}}/payment"
           },
           "response": []
         },
@@ -492,8 +487,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/payment/{{paymentId}}/reverse",
-            "description": ""
+            "url": "{{url}}/payment/{{paymentId}}/reverse"
           },
           "response": []
         }
@@ -571,8 +565,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/suspend",
-            "description": ""
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/suspend"
           },
           "response": []
         },
@@ -643,8 +636,7 @@
                   "equals": true
                 }
               ]
-            },
-            "description": ""
+            }
           },
           "response": []
         },
@@ -693,8 +685,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/resume",
-            "description": ""
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/resume"
           },
           "response": []
         },
@@ -748,8 +739,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/recurringpayment",
-            "description": ""
+            "url": "{{url}}/recurringpayment"
           },
           "response": []
         },
@@ -803,8 +793,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/payments",
-            "description": ""
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}/payments"
           },
           "response": []
         },
@@ -853,8 +842,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/paymentschedule",
-            "description": ""
+            "url": "{{url}}/paymentschedule"
           },
           "response": []
         },
@@ -903,8 +891,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/recurringpayment",
-            "description": ""
+            "url": "{{url}}/recurringpayment"
           },
           "response": []
         },
@@ -953,8 +940,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/paymentplan",
-            "description": ""
+            "url": "{{url}}/paymentplan"
           },
           "response": []
         },
@@ -1008,8 +994,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{recurringPaymentId}},\r\n    \"PaymentAmount\": 15,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}",
-            "description": ""
+            "url": "{{url}}/recurringpayment/{{recurringPaymentId}}"
           },
           "response": []
         }
@@ -1067,8 +1052,7 @@
               "mode": "raw",
               "raw": "{\n\t\"FirstName\": \"John\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"johndoe@paysimple.com\",\n    \"Phone\": \"5551234567\",\n    \"Company\": \"Great Plumbing\",\n    \"Notes\": null,\n    \"CustomerAccount\": \"\",\n    \"ShippingSameAsBilling\": false,\n    \"BillingAddress\": {\n        \"StreetAddress1\": \"123 Any Street\",\n        \"City\": \"White Rock\",\n        \"StateCode\": \"BC\",\n        \"ZipCode\": \"A3A2A1\",\n        \"Country\": \"Canada\"\n    },\n    \"ShippingAddress\": {\n        \"StreetAddress1\": \"1515 Wynkoop St.\",\n        \"StreetAddress2\": \"Suite 200\",\n        \"City\": \"Denver\",\n        \"StateCode\": \"CO\",\n        \"ZipCode\": \"80202\",\n        \"Country\": \"US\"\n    }\n}"
             },
-            "url": "{{url}}/customer",
-            "description": ""
+            "url": "{{url}}/customer"
           },
           "response": []
         },
@@ -1119,8 +1103,7 @@
               "mode": "raw",
               "raw": "{\n\t\"Id\" : {{customerId}},\n\t\"FirstName\": \"Jane\",\n    \"LastName\": \"Doe\",\n    \"Email\": \"johndoe@paysimple.com\",\n    \"Phone\": \"5551234567\",\n    \"Company\": \"Great Plumbing\",\n    \"Notes\": null,\n    \"CustomerAccount\": \"\",\n    \"ShippingSameAsBilling\": false,\n    \"BillingAddress\": {\n        \"StreetAddress1\": \"123 Any Street\",\n        \"City\": \"White Rock\",\n        \"StateCode\": \"BC\",\n        \"ZipCode\": \"A3A2A1\",\n        \"Country\": \"Canada\"\n    },\n    \"ShippingAddress\": {\n        \"StreetAddress1\": \"1515 Wynkoop St.\",\n        \"StreetAddress2\": \"Suite 200\",\n        \"City\": \"Denver\",\n        \"StateCode\": \"CO\",\n        \"ZipCode\": \"80202\",\n        \"Country\": \"US\"\n    }\n}"
             },
-            "url": "{{url}}/customer",
-            "description": ""
+            "url": "{{url}}/customer"
           },
           "response": []
         },
@@ -1166,8 +1149,7 @@
               }
             ],
             "body": {},
-            "url": "{{url}}/customer",
-            "description": ""
+            "url": "{{url}}/customer"
           },
           "response": []
         },
@@ -1213,8 +1195,7 @@
               }
             ],
             "body": {},
-            "url": "{{url}}/customer/{{customerId}}",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}"
           },
           "response": []
         },
@@ -1280,8 +1261,7 @@
                   "equals": true
                 }
               ]
-            },
-            "description": ""
+            }
           },
           "response": []
         },
@@ -1332,8 +1312,7 @@
               "mode": "raw",
               "raw": "{\r\n    \"CreditCardNumber\": \"4111111111111111\",\r\n    \"ExpirationDate\": \"12/2015\",\r\n    \"Issuer\": \"12\",\r\n    \"BillingZipCode\": \"80202\",\r\n    \"CustomerId\": {{customerId}},\r\n    \"IsDefault\" : false\r\n}"
             },
-            "url": "{{url}}/account/creditcard",
-            "description": ""
+            "url": "{{url}}/account/creditcard"
           },
           "response": []
         },
@@ -1382,8 +1361,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/customer/{{customerId}}/{{creditCardAccountId}}",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}/{{creditCardAccountId}}"
           },
           "response": []
         },
@@ -1434,8 +1412,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{creditCardAccountId}},\r\n    \"ExpirationDate\": \"12/2015\",\r\n    \"BillingZipCode\": \"80203\",\r\n    \"CreditCardNumber\": \"4111111111111111\",\r\n    \"Issuer\": \"12\",\r\n    \"CustomerId\" : {{customerId}}\r\n}"
             },
-            "url": "{{url}}/account/creditcard",
-            "description": ""
+            "url": "{{url}}/account/creditcard"
           },
           "response": []
         },
@@ -1468,8 +1445,7 @@
               }
             ],
             "body": {},
-            "url": "{{url}}/customer/{{customerId}}/creditcardaccounts",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}/creditcardaccounts"
           },
           "response": []
         },
@@ -1518,8 +1494,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/account/creditcard/{{creditCardAccountId}}",
-            "description": ""
+            "url": "{{url}}/account/creditcard/{{creditCardAccountId}}"
           },
           "response": []
         },
@@ -1570,8 +1545,7 @@
               "mode": "raw",
               "raw": "{\r\n    \"IsCheckingAccount\": \"true\",\r\n    \"RoutingNumber\": \"072000326\",\r\n    \"AccountNumber\": \"751666666\",\r\n    \"BankName\": \"Test Bank\",\r\n    \"CustomerId\": {{customerId}},\r\n    \"IsDefault\": false\r\n}"
             },
-            "url": "{{url}}/account/ach",
-            "description": ""
+            "url": "{{url}}/account/ach"
           },
           "response": []
         },
@@ -1620,8 +1594,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/customer/{{customerId}}/{{achAccountId}}",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}/{{achAccountId}}"
           },
           "response": []
         },
@@ -1672,8 +1645,7 @@
               "mode": "raw",
               "raw": "{\r\n\t\"Id\" : {{achAccountId}},\r\n    \"IsCheckingAccount\": \"false\",\r\n    \"RoutingNumber\": \"072000326\",\r\n    \"AccountNumber\": \"751666666\",\r\n    \"BankName\": \"Test Bank\",\r\n    \"CustomerId\": {{customerId}},\r\n    \"IsDefault\": \"true\"\r\n}"
             },
-            "url": "{{url}}/account/ach",
-            "description": ""
+            "url": "{{url}}/account/ach"
           },
           "response": []
         },
@@ -1706,8 +1678,7 @@
               }
             ],
             "body": {},
-            "url": "{{url}}/customer/{{customerId}}/achaccounts",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}/achaccounts"
           },
           "response": []
         },
@@ -1740,8 +1711,7 @@
               }
             ],
             "body": {},
-            "url": "{{url}}/customer/{{customerId}}/accounts",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}/accounts"
           },
           "response": []
         },
@@ -1790,8 +1760,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/account/ach/{{achAccountId}}",
-            "description": ""
+            "url": "{{url}}/account/ach/{{achAccountId}}"
           },
           "response": []
         },
@@ -1840,8 +1809,7 @@
               "mode": "raw",
               "raw": ""
             },
-            "url": "{{url}}/customer/{{customerId}}",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}"
           },
           "response": []
         },
@@ -1874,8 +1842,7 @@
               }
             ],
             "body": {},
-            "url": "{{url}}/customer/{{customerId}}/payments",
-            "description": ""
+            "url": "{{url}}/customer/{{customerId}}/payments"
           },
           "response": []
         },
@@ -1931,8 +1898,7 @@
               "mode": "raw",
               "raw": "{\r\n    \"PaymentAmount\": 12,\r\n    \"AccountId\":  {{accountId}},\r\n    \"StartDate\": \"{{oneWeek}}\",\r\n    \"ExecutionFrequencyType\": 4\r\n}\r\n                "
             },
-            "url": "{{url}}/recurringpayment",
-            "description": ""
+            "url": "{{url}}/recurringpayment"
           },
           "response": []
         }
@@ -1950,12 +1916,17 @@
         "id": "3f57218d-6163-442e-9706-25392dfd360e",
         "type": "text/javascript",
         "exec": [
+          "Date.prototype.subtractHours = function(h) {    ",
+          "   this.setTime(this.getTime() - (h*60*60*1000)); ",
+          "   return this;   ",
+          "}",
+          "",
           "var apiKey = pm.variables.get('apiKey');",
           "var userId = pm.variables.get('userId');",
           "",
           "console.log('apikey' + apiKey);",
           "",
-          "var date = new Date();",
+          "var date = subtractHours(1);",
           "var isoDate = date.toISOString();",
           "",
           "var encodedKey = CryptoJS.enc.Utf8.parse(apiKey);",
@@ -1983,17 +1954,17 @@
   ],
   "variable": [
     {
-      "id": "6a2da82c-acb1-42c2-8e64-d8b2530cb0aa",
+      "id": "9d262d83-fbf6-42e0-b000-6c8b8a64f85a",
       "key": "apiKey",
       "value": "apiservertoken1225",
-      "type": "text",
+      "type": "string",
       "description": ""
     },
     {
-      "id": "956f3c92-432a-448f-9a69-244d49401468",
+      "id": "ed5cd471-a7da-48c3-bc23-970d9ec702d9",
       "key": "userId",
       "value": "APIUser1225",
-      "type": "text",
+      "type": "string",
       "description": ""
     }
   ]
