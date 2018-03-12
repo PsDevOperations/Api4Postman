@@ -1916,18 +1916,14 @@
         "id": "3f57218d-6163-442e-9706-25392dfd360e",
         "type": "text/javascript",
         "exec": [
-          "Date.prototype.subtractHours = function(h) {    ",
-          "   this.setTime(this.getTime() - (h*60*60*1000)); ",
-          "   return this;   ",
-          "}",
-          "",
           "var apiKey = pm.variables.get('apiKey');",
           "var userId = pm.variables.get('userId');",
           "",
           "console.log('apikey' + apiKey);",
           "",
-          "var date = subtractHours(1);",
+          "var date = new Date();",
           "var isoDate = date.toISOString();",
+          "console.log(isoDate);",
           "",
           "var encodedKey = CryptoJS.enc.Utf8.parse(apiKey);",
           "var encodedTimestamp = CryptoJS.enc.Utf8.parse(isoDate);",
@@ -1954,14 +1950,14 @@
   ],
   "variable": [
     {
-      "id": "9d262d83-fbf6-42e0-b000-6c8b8a64f85a",
+      "id": "9c2a194e-b179-4d88-a7e8-f1da0225ee1d",
       "key": "apiKey",
       "value": "apiservertoken1225",
       "type": "string",
       "description": ""
     },
     {
-      "id": "ed5cd471-a7da-48c3-bc23-970d9ec702d9",
+      "id": "f8915e2f-5ef6-492e-a442-e93a73662f9a",
       "key": "userId",
       "value": "APIUser1225",
       "type": "string",
