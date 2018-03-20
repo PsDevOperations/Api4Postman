@@ -1950,16 +1950,16 @@
   ],
   "variable": [
     {
-      "id": "9c2a194e-b179-4d88-a7e8-f1da0225ee1d",
+      "id": "7696bea2-ae33-40e1-b3ba-97b7a0f665d6",
       "key": "apiKey",
       "value": "apiservertoken1225",
       "type": "string",
       "description": ""
     },
     {
-      "id": "f8915e2f-5ef6-492e-a442-e93a73662f9a",
+      "id": "19eaa91e-12c6-43d6-abd4-405093fb7ef9",
       "key": "userId",
-      "value": "APIUser1225",
+      "value": "DdiEfgGk1WpUgwOT1Nm52fc0NSeOYP5vFS1LxTKB84yoVXosRMw3XAhTjOYljIkTZVaPq7Ln5ms12ZhEbWCkZvWrLowF2TOfvpTK8oBVkuvcRBsgjJsPycBGvlrEae70",
       "type": "string",
       "description": ""
     }
