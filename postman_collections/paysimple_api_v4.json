@@ -1947,21 +1947,5 @@
         ]
       }
     }
-  ],
-  "variable": [
-    {
-      "id": "fd546e10-4fd8-4e9a-b928-dde019f51beb",
-      "key": "apiKey",
-      "value": "apiservertoken1225",
-      "type": "string",
-      "description": ""
-    },
-    {
-      "id": "78dfb3b0-ab65-4749-ace8-acdb0f896ed3",
-      "key": "userId",
-      "value": "apiservertoken1225",
-      "type": "string",
-      "description": ""
-    }
   ]
 }
