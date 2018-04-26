@@ -1947,5 +1947,14 @@
         ]
       }
     }
+  ],
+  "variable": [
+    {
+      "id": "7440d8bb-e38e-4b10-bf99-2c7de9006916",
+      "key": "url",
+      "value": "https://sandbox-payments.paysimple.com/v4",
+      "type": "string",
+      "description": ""
+    }
   ]
 }
