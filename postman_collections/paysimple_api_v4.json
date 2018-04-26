@@ -1950,9 +1950,9 @@
   ],
   "variable": [
     {
-      "id": "7440d8bb-e38e-4b10-bf99-2c7de9006916",
+      "id": "6ffb5169-3cec-40d5-9273-a5ccb2b2f5e2",
       "key": "url",
-      "value": "https://sandbox-payments.paysimple.com/v4",
+      "value": "https://sandbox-api.paysimple.com/v4",
       "type": "string",
       "description": ""
     }
